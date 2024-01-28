@@ -14,7 +14,13 @@ You should first download the [BlenderBot-small](https://huggingface.co/facebook
 
 You should then download the [dpr-reader-single-nq-base](https://huggingface.co/facebook/dpr-reader-single-nq-base) model and put the `pytorch_model.bin` file in `DPR`.
 
-Then run `RUN/prepare_strat.sh`
+Then run `_reformat/pre_process.py`
+
+And run `_reformat/process.py`
+
+And run `process.py`
+
+Next run `RUN/prepare_strat.sh`
 
 And run `RUN/train_strat.sh`
 
