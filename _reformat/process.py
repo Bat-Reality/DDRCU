@@ -49,8 +49,6 @@ def process_data(d):
     persona = d['persona']
     persona_list = d['persona_list']
     # persona_list = []
-    # init_intensity = int(d['score']['speaker']['begin_intensity'])
-    # final_intensity = int(d['score']['speaker']['end_intensity'])
 
     d = d['dialog']
     dial = []
@@ -83,8 +81,6 @@ def process_data(d):
         'persona': persona,
         'persona_list': persona_list,
         'situation': situation,
-        # 'init_intensity': init_intensity,
-        # 'final_intensity': final_intensity,
         'dialog': dial,
     }
     return res
@@ -147,58 +143,3 @@ with open('test.txt', 'w') as f:
 
 print('Avg. length of dialogues (test): ', turns / (len(train) + len(valid) + len(test)))
 print('Avg. length of utterances (test): ', uttrs / turns)
-
-
-# def save_comet(texts, dev_size, test_size, type, dataset):
-#     if type == "context":
-#         name = "sys_dialog_texts"
-#     elif type == "target":
-#         name = "sys_target_texts"
-#     elif type == "emotion":
-#         name = "sys_emotion_texts"
-#     elif type == "situation":
-#         name = "sys_situation_texts"
-#     else:
-#         name = ""
-#
-#     if dataset == "train":
-#         data_dir = f"./comet_data/{name}.train.npy"
-#         data = texts[dev_size + dev_size + test_size:]
-#     elif dataset == "test":
-#         data_dir = f"./comet_data/{name}.test.npy"
-#         data = texts[dev_size: dev_size + test_size]
-#     elif dataset == "valid":
-#         data_dir = f"./comet_data/{name}.dev.npy"
-#         data = texts[:dev_size] + texts[dev_size + test_size: dev_size + dev_size + test_size]
-#     else:
-#         data_dir = f"./comet_data/{name}.npy"
-#         data = []
-#
-#     with open(data_dir, 'wb') as file:
-#         pickle.dump(data, file)
-#
-#
-# assert (
-#     len(context)
-#     == len(target)
-#     == len(emotion)
-#     == len(situation)
-# )
-# # random.shuffle(context)
-# # random.shuffle(target)
-# # random.shuffle(emotion)
-# # random.shuffle(situation)
-# dev_size = int(0.1 * len(context))
-# test_size = int(0.1 * len(context))
-# save_comet(context, dev_size, test_size, "context", "train")
-# save_comet(context, dev_size, test_size, "context", "test")
-# save_comet(context, dev_size, test_size, "context", "valid")
-# save_comet(target, dev_size, test_size, "target", "train")
-# save_comet(target, dev_size, test_size, "target", "test")
-# save_comet(target, dev_size, test_size, "target", "valid")
-# save_comet(emotion, dev_size, test_size, "emotion", "train")
-# save_comet(emotion, dev_size, test_size, "emotion", "test")
-# save_comet(emotion, dev_size, test_size, "emotion", "valid")
-# save_comet(situation, dev_size, test_size, "situation", "train")
-# save_comet(situation, dev_size, test_size, "situation", "test")
-# save_comet(situation, dev_size, test_size, "situation", "valid")
