@@ -66,18 +66,10 @@ for data in reader:
             user_number += 1
 
         if i > 0 and dialog[i]['speaker'] == 'sys':
-            # if dialog[i - 1]['speaker'] != 'sys' and user_number > 2:
-            #     persona = persona_list[user_number - 3]
-            #     # persona = persona.replace('<persona> ', '').replace(' <input>', '')
             texts_usr[problem].append(dialog[i-1]['text'])
             texts_sys[problem].append(dialog[i]['text'])
             texts_sys_strategy[problem].append(persona + '[' + dialog[i]['strategy'] + '] ' + dialog[i]['text'])
-            # texts_sys_strategy[problem].append('[' + dialog[i]['strategy'] + '] ' + dialog[i]['text'])
             strategy[problem].append(dialog[i]['strategy'])
-            # usr_list.append(dialog[i-1]['text'])
-            # sys_list.append(dialog[i]['text'])
-            # str_list.append(dialog[i]['strategy'])
-            # sys_list_str.append(persona + ' [' + dialog[i]['strategy'] + '] ' + dialog[i]['text'])
 
 
 def _norm(x):
@@ -120,18 +112,9 @@ def add_dpr(data):
                     truncation=True,
                     max_length=32
                 ).to(device)
-                # # 可以用全部的数据, 对比一下效果
-                # encoded_inputs = DPR_tokenizer(
-                #     questions=[last_text] * len(sys_list),
-                #     texts=sys_list_str,
-                #     return_tensors="pt",
-                #     padding='max_length',
-                #     truncation=True,
-                #     max_length=32
-                # ).to(device)
                 outputs = DPR_reader(**encoded_inputs)
                 relevance_logits = outputs.relevance_logits
-                _, indices = torch.topk(relevance_logits, 10)  # 同步修改get_infer_batch中的context
+                _, indices = torch.topk(relevance_logits, 10)
                 dialog[i]['dpr'] = [[texts_usr[problem][index]] + [strategy[problem][index]] + [texts_sys[problem][index]] for index in indices]
                 # dialog[i]['dpr'] = [[usr_list[index]] + [str_list[index]] + [sys_list[index]] for index in indices]
 
@@ -149,11 +132,5 @@ data = []
 for d in tqdm.tqdm(original, total=len(original)):
     data.append(add_dpr(d))
 
-# DPRConv_1: problem
-# DPRConv_2: problem + persona
-# DPRConv_3: all
-# DPRConv_4: all + persona
-# DPRConv_5: top-k
-# DPRConv_6: top-k + persona
 with open('DPRConv_6.json', 'w', encoding='utf-8', errors='ignore') as f:
     json.dump(data, f, ensure_ascii=False, indent=2)
