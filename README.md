@@ -25,11 +25,3 @@ And run `process.py`
 Next run `RUN/prepare_strat.sh`
 
 And run `RUN/train_strat.sh`
-
-### Model inference
-
-run `RUN/infer_strat.sh`
-
-### Model interact
-
-run `RUN/interact_strat.sh`
